@@ -12,13 +12,12 @@ class HealthTest {
     @Autowired
     private WebTestClient webTestClient;
 
-    // Arrange: Prepara el entorno de la prueba, configurando los objetos necesarios.
     @Test
-    public void testCheckHealth() {
-        // Act: Llama al método que queremos probar.
+    void testCheckHealth() {
+        // Act
         webTestClient.get().uri("/health")
                 .exchange()
-                // Assert: Verifica que el comportamiento sea el esperado.
+                // Assert
                 .expectStatus().isOk()
                 .expectBody(String.class).isEqualTo(OK_STATUS);
     }
