@@ -10,6 +10,7 @@ sonar {
 		property "sonar.projectKey", "estebancoloradogonzalez_denariousbackend"
 		property "sonar.organization", "estebancoloradogonzalez"
 		property "sonar.host.url", "https://sonarcloud.io"
+		property "sonar.exclusions", "**/com/denarious/transversal/domain/constant/APIConstant.java,**/com/denarious/transversal/domain/constant/HealthConstant.java,**/com/denarious/transversal/domain/constant/NumberConstant.java,**/com/denarious/transversal/domain/message/APIMessage.java"
 	}
 }
 
