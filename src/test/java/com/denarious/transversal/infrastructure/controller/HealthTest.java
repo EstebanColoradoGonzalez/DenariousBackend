@@ -1,14 +1,12 @@
 package com.denarious.transversal.infrastructure.controller;
 
-import com.denarious.transversal.domain.constants.HealthConstant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 import static com.denarious.transversal.domain.constants.HealthConstant.OK_STATUS;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @WebFluxTest(controllers = Health.class)
 class HealthTest {
@@ -26,15 +24,16 @@ class HealthTest {
     }
 
     @Test
-    void testPrivateConstructor() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
+    void checkHealthTest() {
         // Arrange
-        Constructor<HealthConstant> constructor = HealthConstant.class.getDeclaredConstructor();
-        constructor.setAccessible(true);
+        Health healthController = new Health();
 
         // Act
-        HealthConstant instance = constructor.newInstance();
+        Mono<String> result = healthController.checkHealth();
 
         // Assert
-        assertNotNull(instance);
+        StepVerifier.create(result)
+                .expectNext(OK_STATUS)
+                .verifyComplete();
     }
 }
