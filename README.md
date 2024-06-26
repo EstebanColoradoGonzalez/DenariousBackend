@@ -338,6 +338,6 @@ Siguiendo este flujo de trabajo estructurado, garantizamos que los cambios en nu
 Si tienes alguna pregunta, sugerencia o necesitas asistencia, no dudes en ponerte en contacto con nosotros:
 
 - **Proyecto en GitHub**: [DenariousBackend](https://github.com/estebancoloradogonzalez/DenariousBackend.git)
-- **Correo Electrónico**: [denarioues@gmail.com](mailto:denarious@gmail.com)
+- **Correo Electrónico**: [denarious@gmail.com](mailto:denarious@gmail.com)
 
 Estamos aquí para ayudarte y agradecemos tu contribución al proyecto.
