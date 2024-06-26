@@ -1,15 +1,16 @@
 # DenariousBackend
 
-Bienvenido al repositorio **DenariousBackend**, el núcleo del sistema de gestión financiera de Denarious. Este repositorio contiene el código fuente y los servicios necesarios para manejar la lógica de negocio, procesamiento de datos y la comunicación con la base de datos para nuestra aplicación.
+Bienvenido al repositorio **DenariousBackend**, el cual es el núcleo del sistema, encargado de manejar la lógica de negocio, la gestión de datos y la interacción con la base de datos. Proporciona APIs seguras y eficientes para la creación y gestión de usuarios, hogares virtuales, transacciones financieras, presupuestos y roles, garantizando la integridad y coherencia de los datos.
 
 ## Descripción del Proyecto
 
-**DenariousBackend** proporciona una serie de API y servicios que soportan las funcionalidades de la aplicación Denarious, permitiendo a los usuarios gestionar sus finanzas personales de manera eficiente. Entre las principales funcionalidades se incluyen:
+**Denarious** es una aplicación diseñada para facilitar la gestión financiera colaborativa en hogares virtuales, permitiendo a los miembros administrar presupuestos, transacciones y roles de manera eficiente. La aplicación está basada en el modelo 50/30/20, lo que ayuda a los usuarios a distribuir sus ingresos en necesidades, deseos y ahorros. El sistema construido estara encargado de:
 
-- **Gestión de Transacciones:** Creación, edición y eliminación de ingresos y egresos.
-- **Visualización de Estadísticas Financieras:** Suministro de datos para gráficos y resúmenes financieros.
-- **Filtros y Consultas Personalizadas:** Filtrado de transacciones por fecha, categoría, subcategoría y otros parámetros.
-- **Autenticación y Autorización:** Seguridad robusta para garantizar que solo los usuarios autorizados accedan a sus datos financieros.
+- Gestión de usuarios y autenticación.
+- Administración de hogares virtuales y miembros.
+- Control de presupuestos y fondos según el modelo 50/30/20.
+- Registro y seguimiento de transacciones financieras.
+- Asignación y verificación de roles y permisos de usuarios.
 
 ## Requisitos Previos
 
@@ -42,7 +43,7 @@ cd DenariousBackend
 2. **Importar el Proyecto**:
     - Seleccione `Open or Import` en la pantalla de bienvenida.
     - Navegue hasta el directorio donde clonó el repositorio de **DenariousBackend**.
-    - Seleccione el archivo `build.gradle` (o `pom.xml` si está utilizando Maven) y haga clic en `OK`.
+    - Seleccione el archivo `build.gradle` y haga clic en `OK`.
 
 3. **Configurar el SDK de Java**:
     - Vaya a `File > Project Structure > Project`.
@@ -54,7 +55,7 @@ cd DenariousBackend
     - En `Gradle JVM`, seleccione el SDK de Java configurado anteriormente.
     - Asegúrese de que `Use Gradle from` esté configurado en `wrapper task in Gradle build script`.
 
-### Configuración de la Base de Datos con PostgreSQL 16 y pgAdmin 4
+### Configuración de la Base de Datos en local con PostgreSQL 16 y pgAdmin 4
 
 1. **Instalar PostgreSQL 16**:
     - Descargue e instale PostgreSQL 16 desde el [sitio oficial de PostgreSQL](https://www.postgresql.org/download/).
@@ -77,16 +78,16 @@ cd DenariousBackend
     - Añada las siguientes variables de entorno al archivo:
 
     ```env
-    DATABASE_URL=jdbc:postgresql://localhost:5432/denarious
-    DATABASE_USER=postgres
-    DATABASE_PASSWORD=password
-    JWT_SECRET=tu_secreto_jwt
+    DB_URL=jdbc:postgresql://localhost:5432/denarious;
+    DB_NAME=denarious;
+    DB_USERNAME=postgres;
+    DB_PASSWORD=password
     ```
 
 ###Ejecutar el Proyecto en IntelliJ IDEA
 
 1. **Cargar Dependencias**:
-    - IntelliJ IDEA automáticamente detectará el archivo `build.gradle` (o `pom.xml`) y comenzará a descargar las dependencias necesarias.
+    - IntelliJ IDEA automáticamente detectará el archivo `build.gradle` y comenzará a descargar las dependencias necesarias.
 
 2. **Compilar el Proyecto**:
     - Vaya a `View > Tool Windows > Gradle`.
@@ -94,7 +95,7 @@ cd DenariousBackend
 
 3. **Configurar la Ejecución de la Aplicación**:
     - Vaya a `Run > Edit Configurations`.
-    - Haga clic en el icono `+` y seleccione `Spring Boot` (o `Application` si usa otro framework).
+    - Haga clic en el icono `+` y seleccione `Spring Boot`.
     - Configure el nombre de la configuración y asegúrese de que la clase principal esté seleccionada correctamente.
     - Asegúrese de que las variables de entorno del archivo `.env` estén configuradas en `Environment variables`.
 
@@ -112,7 +113,7 @@ cd DenariousBackend
 
 ### Probar las APIs
 
-Utilice Postman o cualquier otra herramienta de su elección para probar las APIs. Puede importar la colección de Postman proporcionada en el directorio `docs/apis` para facilitar las pruebas.
+Utilice Postman o cualquier otra herramienta de su elección para probar las APIs. Puede encontrar toda la documentación de la API en el directorio `docs/apis` para facilitar las pruebas.
 
 ## Estructura del Proyecto
 
@@ -123,21 +124,30 @@ DenariousBackend/
 │
 ├── src/
 │   ├── main/
-│   │   ├── java/com/denarious/backend/
-│   │   │   ├── application/         # Servicios de aplicación
-│   │   │   ├── domain/              # Entidades y lógica de dominio
-│   │   │   ├── infrastructure/      # Adaptadores y configuración de infraestructura
-│   │   │   └── web/                 # Controladores y configuraciones web
-│   │   ├── resources/               # Archivos de configuración y recursos estáticos
-│   │   └── docker/                  # Archivos Docker
-│   └── test/                        # Pruebas unitarias e integradas
-├── docs/                            # Documentación del proyecto
-│   ├── postman/                     # Colección de Postman para pruebas de API
-│   └── architecture/                # Diagramas de arquitectura
-├── .env                             # Archivo de configuración de entorno
-├── Dockerfile                       # Archivo Docker para crear la imagen de la aplicación
-├── README.md                        # Documentación del proyecto
-└── pom.xml                          # Archivo de configuración de Maven
+│   │   ├── java/com/denarious/
+│   │   │   ├── transaction/   
+│   │   │   │   ├── application/        
+│   │   │   │   ├── domain/        
+│   │   │   │   ├── infrastructure/        
+│   │   │   ├── transversal/
+│   │   │   │   ├── application/        
+│   │   │   │   ├── domain/        
+│   │   │   │   ├── infrastructure/                 
+│   │   │   └── user/    
+│   │   │   │   ├── application/        
+│   │   │   │   ├── domain/        
+│   │   │   │   ├── infrastructure/               
+│   │   └── resources/               
+│   └── test/                        
+├── docs/                            
+│   └── apis/                
+├── .gitignore                             
+├── build.gradle                       
+├── gradlew                      
+├── gradlew.bat                      
+├── lombok.config                      
+├── README.md                        
+└── settings.gradle                         
 ```
 
 ## Información sobre Contribución y Contacto
@@ -252,7 +262,7 @@ Para asegurar un flujo de trabajo ordenado y eficiente, utilizaremos un esquema 
 
 ### Estructura de Ramas
 
-- **`develop`**: Esta rama es utilizada para el desarrollo local. A partir de esta rama se crean las ramas de características (features).
+- **`develop`**: Esta rama es utilizada para el desarrollo local. A partir de esta rama se crean las subramas de características (features).
 - **`test`**: Esta rama se usa para pruebas. Los cambios provenientes de `develop` se integran aquí para ser testeados.
 - **`main`**: Esta es la rama de producción. Sólo los cambios probados y certificados llegan a esta rama.
 
@@ -267,17 +277,16 @@ Todo el desarrollo inicial se realiza en la rama `develop`. Esta es la rama base
 Para comenzar a trabajar en una nueva característica, se debe crear una rama de feature a partir de `develop`. La estructura del nombre de la rama debe seguir el siguiente formato:
 
 ```bash
-<codigo_de_la_subtarea>_<nombre_de_la_subtarea_en_especifico_en_ingles>
+<nombre_de_la_funcionalidad_en_especifico_en_ingles>
 ```
 
 **Ejemplo:**
 
-Si tienes una historia de usuario con el código 1.1.1.1 y el nombre "Implementar búsqueda avanzada", la rama de feature se llamará:
+Si tienes una caracteristica que quieres implementar y la llamaras "Implementar búsqueda avanzada", la rama de feature se llamará:
 
 ```bash
-feature/1.1.1.1_Implement_advanced_search
+feature/Implement_advanced_search
 ```
-
 
 **Comandos:**
 
@@ -306,57 +315,19 @@ Una vez completado el desarrollo en la rama de feature, crea un Pull Request (PR
     ```
 
 2. **Crear el PR en la Plataforma de Git:**
-   - Ve a la interfaz de tu repositorio en GitHub, GitLab o la plataforma que estés utilizando.
-   - Navega a la sección de Pull Requests y crea un nuevo PR desde tu rama de feature (`1.1.1.1_Implement_advanced_search`) hacia `develop`.
+   - Ve a la interfaz de tu repositorio en GitHub.
+   - Navega a la sección de Pull Requests y crea un nuevo PR desde tu rama de feature (`Implement_advanced_search`) hacia `develop`.
 
 3. **Revisión del PR:**
-   - Asegúrate de que al menos un desarrollador revise y apruebe el PR antes de fusionarlo.
+   - Ahora debes esperar que se revise tu PR, si la caracteristica es interesante y atractiva, se evaluare si necesita de correcciones, las cuales se pediran si es necesario.
    - Realiza los cambios necesarios según los comentarios de la revisión.
 
 4. **Merge del PR:**
-   - Una vez aprobado, fusiona el PR en `develop`.
+   - Una vez aprobado, se fusionará el PR en `develop`.
 
 ### 4. Integración en la Rama `test`
 
-Después de que los cambios se hayan fusionado en `develop`, es momento de integrarlos en `test` para pruebas más exhaustivas.
-
-### Pasos para Integrar en `test`:
-
-1. **Actualizar `develop` y Crear un PR a `test`:**
-
-    ```bash
-    git checkout test
-    git pull origin test
-    git checkout develop
-    git pull origin develop
-    git merge develop
-    git push origin test
-    ```
-
-2. **Crear el PR:**
-   - Navega a la sección de Pull Requests en tu plataforma de Git.
-   - Crea un PR desde `test` hacia `main`.
-
-3. **Revisión del PR:**
-   - Asegúrate de que el equipo responsable de la producción revise y apruebe los cambios.
-
-4. **Merge del PR:**
-   - Una vez aprobado, fusiona el PR en `main`.
-
-### Resumen del Flujo de Trabajo
-
-1. **Desarrollo Local:**
-   - `develop` -> Crear rama de feature: `<codigo_de_la_subtarea>_<nombre_de_la_subtarea_de_usuario_en_especifico>`
-   - Desarrollar en la rama de feature
-   - Crear PR de feature a `develop`
-
-2. **Integración y Pruebas:**
-   - `develop` -> Crear PR a `test`
-   - Realizar pruebas en `test`
-
-3. **Despliegue a Producción:**
-   - `test` -> Crear PR a `main`
-   - Desplegar en `main`
+Después de que los cambios se hayan fusionado en `develop`, el resto del proceso de despliegue sera realizado por un miembro del equipo.
 
 ## Conclusión
 
