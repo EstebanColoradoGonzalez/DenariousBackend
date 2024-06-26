@@ -327,7 +327,7 @@ Una vez completado el desarrollo en la rama de feature, crea un Pull Request (PR
 
 ### 4. Integración en la Rama `test`
 
-Después de que los cambios se hayan fusionado en `develop`, el resto del proceso de despliegue sera realizado por un miembro del equipo.
+Después de que los cambios se hayan fusionado en `develop`, el resto del proceso de despliegue a los otros ambientes sera realizado por un miembro del equipo.
 
 ## Conclusión
 
